@@ -8,7 +8,6 @@ import java.nio.charset.StandardCharsets
 import scala.concurrent.{ExecutionContext,Future}
 
 import dispatch.{Http,Req,url,as}
-import com.ning.http.multipart.FilePart
 import play.api.libs.json._
 
 object SlackApiClient {
@@ -253,18 +252,19 @@ class SlackApiClient(token: String) {
 
   def uploadFile(file: File, content: Option[String] = None, filetype: Option[String] = None, filename: Option[String] = None,
       title: Option[String] = None, initialComment: Option[String] = None, channels: Option[Seq[String]] = None)(implicit ec: ExecutionContext): Future[SlackFile] = {
-    val params = Seq (
-      ("content" -> content),
-      ("filetype" -> filetype),
-      ("filename" -> filename),
-      ("title" -> title),
-      ("initial_comment" -> initialComment),
-      ("channels" -> channels.map(_.mkString(",")))
-    )
-    val multi = (apiBaseWithToken / "files.upload").setContentType("multipart/form-data", StandardCharsets.UTF_8.toString).setHeader("Transfer-Encoding", "chunked").POST
-    val withFile = multi.addBodyPart(new FilePart("file", file))
-    val res = makeApiRequest(addQueryParams(withFile, cleanParams(params)))
-    extract[SlackFile](res, "file")
+//    val params = Seq (
+//      ("content" -> content),
+//      ("filetype" -> filetype),
+//      ("filename" -> filename),
+//      ("title" -> title),
+//      ("initial_comment" -> initialComment),
+//      ("channels" -> channels.map(_.mkString(",")))
+//    )
+//    val multi = (apiBaseWithToken / "files.upload").setContentType("multipart/form-data", StandardCharsets.UTF_8.toString).setHeader("Transfer-Encoding", "chunked").POST
+//    val withFile = multi.addBodyPart(new FilePart("file", file))
+//    val res = makeApiRequest(addQueryParams(withFile, cleanParams(params)))
+//    extract[SlackFile](res, "file")
+    throw new RuntimeException()
   }
 
 
